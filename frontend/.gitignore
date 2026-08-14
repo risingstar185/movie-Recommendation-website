@@ -39,3 +39,24 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Machine Learning files
+*.pkl
+*.joblib
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Environment variables
+.env
+.env.local
+
+# Node
+node_modules/
+
+# Next.js
+.next/
+out/
