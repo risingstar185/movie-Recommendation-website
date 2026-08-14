@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',       // <-- Yeh line 'out' folder banayegi
+  output: 'export',
   images: {
-    unoptimized: true,    // Static export ke liye images unoptimized hona zaroori hai
+    unoptimized: true,
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
