@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  output: 'export',       // <-- Yeh line 'out' folder banayegi
+  images: {
+    unoptimized: true,    // Static export ke liye images unoptimized hona zaroori hai
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
