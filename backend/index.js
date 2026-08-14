@@ -24,7 +24,7 @@ app.use(express.json());
 // Test route
 app.get("/", (req, res) => {
   res.json({
-    message: "Plant Disease Detection Backend Running"
+    message: "Movie-recommedation api  Backend Running"
   });
 });
 connectDb();
