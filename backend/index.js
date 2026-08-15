@@ -17,6 +17,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: "https://movie-recommendation-website-1-475f.onrender.com",
+    "https://movie-recommendation-website-qudq.onrender.com",
     credentials: true,
   })
 );
