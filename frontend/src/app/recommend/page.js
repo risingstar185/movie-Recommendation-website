@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Film, Sparkles } from "lucide-react";
 import Link from "next/link";
-const API_URL = "http://localhost:8000";
+const API_URL = "https://movie-recommendation-website-python.onrender.com";
 
 export default function MoviesPage() {
 const [movies, setMovies] = useState([]);
