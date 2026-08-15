@@ -1,5 +1,5 @@
 "use client";
-
+import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Film, Sparkles } from "lucide-react";
 import Link from "next/link";
@@ -11,7 +11,7 @@ const [selectedMovie, setSelectedMovie] = useState("");
 const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(false);
  const [isPremium, setIsPremium] = useState(false);
-
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -103,58 +103,129 @@ const [recommendations, setRecommendations] = useState([]);
       <div className="relative z-10 max-w-7xl mx-auto">
 
         {/* Navbar */}
-        <header className="flex items-center justify-between mb-16">
+       {/* Navbar */}
+<header className="relative flex items-center justify-between mb-16">
 
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
-              <Film className="w-5 h-5 text-white" />
-            </div>
+  {/* Logo */}
+  <Link href="/" className="flex items-center gap-2">
+    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
+      <Film className="w-5 h-5 text-white" />
+    </div>
 
-            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
-              CineMatch
-            </span>
-          </div>
+    <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+      CineMatch
+    </span>
+  </Link>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-            <a
-              href="/contact"
-              className="hover:text-purple-500 transition-colors"
-            >
-             Contact Us
-            </a>
+  {/* Desktop Navigation */}
+  <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
 
-            <a
-              href="/profile"
-              className="hover:text-purple-500 transition-colors"
-            >
-              Profile
-            </a>
-           {isPremium ? (
+    <Link
+      href="/contact"
+      className="hover:text-purple-500 transition-colors"
+    >
+      Contact Us
+    </Link>
+
+    <Link
+      href="/profile"
+      className="hover:text-purple-500 transition-colors"
+    >
+      Profile
+    </Link>
+
+    {isPremium ? (
+      <Link
+        href="/premium/features"
+        className="hover:text-purple-500 transition-colors"
+      >
+        ✨ Premium Features
+      </Link>
+    ) : (
+      <Link
+        href="/premium"
+        className="hover:text-purple-500 transition-colors"
+      >
+        Get Premium
+      </Link>
+    )}
+
+    <Link
+      href="/about"
+      className="hover:text-purple-500 transition-colors"
+    >
+      About Us
+    </Link>
+
+  </nav>
+
+  {/* Mobile Menu Button */}
+  <button
+    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+    className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl border border-border bg-card/50 hover:bg-purple-500/10 transition-colors"
+    aria-label="Toggle menu"
+  >
+    {mobileMenuOpen ? (
+      <X className="w-5 h-5" />
+    ) : (
+      <Menu className="w-5 h-5" />
+    )}
+  </button>
+
+  {/* Mobile Navigation */}
+  {mobileMenuOpen && (
+    <div className="absolute top-14 left-0 right-0 z-50 md:hidden">
+
+      <nav className="mt-3 rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl p-4 flex flex-col gap-2">
+
         <Link
-          href="/premium/features"
-          className="hover:text-purple-500 transition-colors"
+          href="/contact"
+          onClick={() => setMobileMenuOpen(false)}
+          className="rounded-xl px-4 py-3 hover:bg-purple-500/10 hover:text-purple-500 transition-colors"
         >
-          ✨ Premium Features
+          Contact Us
         </Link>
-      ) : (
-        <Link
-          href="/premium"
-          className="hover:text-purple-500 transition-colors"
-        >
-          Get Premium
-        </Link>
-      )}
-            <a
-               href="/about"
-              className="hover:text-purple-500 transition-colors"
-            >
-             About Us
-            </a>
-          </nav>
 
-        </header>
+        <Link
+          href="/profile"
+          onClick={() => setMobileMenuOpen(false)}
+          className="rounded-xl px-4 py-3 hover:bg-purple-500/10 hover:text-purple-500 transition-colors"
+        >
+          Profile
+        </Link>
+
+        {isPremium ? (
+          <Link
+            href="/premium/features"
+            onClick={() => setMobileMenuOpen(false)}
+            className="rounded-xl px-4 py-3 hover:bg-purple-500/10 hover:text-purple-500 transition-colors"
+          >
+            ✨ Premium Features
+          </Link>
+        ) : (
+          <Link
+            href="/premium"
+            onClick={() => setMobileMenuOpen(false)}
+            className="rounded-xl px-4 py-3 hover:bg-purple-500/10 hover:text-purple-500 transition-colors"
+          >
+            Get Premium
+          </Link>
+        )}
+
+        <Link
+          href="/about"
+          onClick={() => setMobileMenuOpen(false)}
+          className="rounded-xl px-4 py-3 hover:bg-purple-500/10 hover:text-purple-500 transition-colors"
+        >
+          About Us
+        </Link>
+
+      </nav>
+
+    </div>
+  )}
+
+</header>
 
         {/* Hero */}
         <div className="mb-12 text-center">
