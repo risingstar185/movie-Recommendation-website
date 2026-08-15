@@ -14,10 +14,20 @@ const app = express();
 
 // Middleware
 app.use(cookieParser());
+const allowedOrigins = [
+  "https://movie-recommendation-website-qudq.onrender.com",
+  "https://movie-recommendation-website-1-475f.onrender.com",
+];
+
 app.use(
   cors({
-    origin: "https://movie-recommendation-website-1-475f.onrender.com",
-    "https://movie-recommendation-website-qudq.onrender.com",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
