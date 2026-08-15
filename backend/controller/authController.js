@@ -52,9 +52,9 @@ const register = async (req, res) => {
 
     // Cookie
     res.cookie("auth_token", auth_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    httpOnly: true,
+      secure: true,
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -114,12 +114,9 @@ const login = async (req, res) => {
     const auth_token = generateToken(user._id);
 
     res.cookie("auth_token", auth_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite:
-        process.env.NODE_ENV === "production"
-          ? "none"
-          : "lax",
+         httpOnly: true,
+      secure: true,
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -148,11 +145,8 @@ const logout = async (req, res) => {
   try {
    res.clearCookie("auth_token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite:
-        process.env.NODE_ENV === "production"
-          ? "none"
-          : "lax",
+      secure: true,
+      sameSite: "none",
     });
     
 res.json({
