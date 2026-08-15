@@ -146,12 +146,15 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    res.clearCookie("auth_token", {
-  httpOnly: true,
-  secure: false,
-  sameSite: "lax",
-});
-
+   res.clearCookie("auth_token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite:
+        process.env.NODE_ENV === "production"
+          ? "none"
+          : "lax",
+    });
+    
 res.json({
   message: "Logged out successfully",
 });
