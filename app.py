@@ -8,7 +8,7 @@ import uvicorn
 
 app = FastAPI()
 
-# CORS: "*" allow kiya taaki production/Render par frontend block na ho
+# CORS: Allow all origins for production stability
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], 
@@ -47,20 +47,23 @@ similarity = pickle.load(open(similarity_path, "rb"))
 class MovieRequest(BaseModel):
     movie: str
 
-# Recommendation function
+# Recommendation function (Fixed index bugs)
 def recommend(movie):
-    movie_index = movies[movies["title"] == movie].index[0]
-    distances = similarity[movie_index]
-    movies_list = sorted(
-        list(enumerate(distances)),
-        reverse=True,
-        key=lambda x: x[1]
-    )[1:6]
-    recommended_movies = [
-        movies.iloc[i[0]].title
-        for i in movies_list
-    ]
-    return recommended_movies
+    try:
+        movie_index = movies[movies["title"] == movie].index[0]
+        distances = similarity[movie_index]
+        movies_list = sorted(
+            list(enumerate(distances)),
+            reverse=True,
+            key=lambda x: x[1]
+        )[1:6]
+        recommended_movies = [
+            movies.iloc[i[0]].title
+            for i in movies_list
+        ]
+        return recommended_movies
+    except Exception as e:
+        return []
 
 # Get all movies
 @app.get("/movies")
@@ -78,14 +81,14 @@ def get_recommendation(request: MovieRequest):
         "recommendations": recommendations
     }
 
-# Health Check Route: "HEAD" aur "GET" dono methods allow kiye hain
-@app.get("/", methods=["GET", "HEAD"])
+# Home Route (Fixed: Removed the wrong methods keyword argument)
+@app.get("/")
 def home():
     return {
         "message": "Movie Recommendation API is running"
     }
 
-# Render Deployment ke liye mandatory host aur port binding block
+# Port binding for deployment
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port)
+    uvicorn.run("app:app", host="0.0.0.0", port=port)
