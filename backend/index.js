@@ -16,7 +16,7 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://movie-recommendation-website-1-475f.onrender.com/",
+    origin: "https://movie-recommendation-website-1-475f.onrender.com",
     credentials: true,
   })
 );
